@@ -1,0 +1,14 @@
+<div align="center">
+<pre>
+░█▀▀░█▀▀░▀█▀░█░█░█▀█
+░▀▀█░█▀▀░░█░░█░█░█▀▀
+░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░░<br>
+[ OS initializer ]
+</pre>
+</div>
+
+### **[Linux](linux/)**
+> Work in progress...
+
+### **[Windows](windows/)**
+> Work in progress...
