@@ -2,12 +2,8 @@
 
 set -euo pipefail
 
-source package.sh
-source styling.sh
-source env.sh
-
 is_installed() {
-   if $PACKAGE_MANAGER $CHECK_OPTION $1; then
+   if $PACKAGE_MANAGER $CHECK_OPTION $1 &> /dev/null; then
         return 0
    fi
    return 1
@@ -23,10 +19,10 @@ update_editor() {
     done
 }
 
-get_sudo_priviledge() {
+get_sudo_privilege() {
     echo -e \
     "${BOLD}${YELLOW}Sudo:" \
-    "${WHITE}higher priviledge are required to run the script${RESET}"
+    "${WHITE}higher privilege are required to run the script${RESET}"
     if ! sudo -v; then
         abort_setup
     fi
@@ -40,6 +36,6 @@ update_setup() {
 ╚═╝╩  ═╩╝╩ ╩ ╩ ╚═╝"
 
     echo -e "\n${BOLD}${MAGENTA}${HEADER}${RESET}"
-    get_sudo_priviledge
+    get_sudo_privilege
     update_editor
 }

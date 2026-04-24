@@ -1,7 +1,5 @@
 # Cleanup functions
 
-source styling.sh
-
 signal_handler() {
     echo -e \
     "\n${BOLD}${YELLOW}Signal(${UNBOLD}$1${BOLD}):" \

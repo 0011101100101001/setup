@@ -2,12 +2,13 @@
 
 set -euo pipefail
 
-source env.sh
-source package.sh
-source styling.sh
+source package/package-install.sh
+source package/package-update.sh
+source package/package.sh
+source binary.sh
 source clean.sh
-source update.sh
-source install.sh
+source env.sh
+source styling.sh
 
 echo -e \
 "${BOLD}${MAGENTA}${HEADER}${RESET}\n" \
