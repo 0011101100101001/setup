@@ -1,28 +1,36 @@
 # Packages to download and install
 
-set -e
+set -euo pipefail
 
 EDITORS=(
+    "neovim"
     "vim"
     "vscode"
-    "neovim"
     "zed"
 )
 
 LANGUAGES=(
-    "go"
-    "rust"
+    "golang"
+    "perl"
     "python"
+    "rust"
 )
 
 COMPILATOR=(
     "clang"
-    "gcc"
     "clang++"
+    "gcc"
     "g++"
 )
 
 DEBUG_TOOLS=(
     "gdb"
     "llvm"
+)
+
+PACKAGE=(
+    "${EDITORS[@]}"
+    "${LANGUAGES[@]}"
+    "${COMPILATOR[@]}"
+    "${DEBUG_TOOLS[@]}"
 )
