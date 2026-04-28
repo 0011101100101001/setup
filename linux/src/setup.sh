@@ -2,12 +2,14 @@
 
 set -euo pipefail
 
-source package/package-install.sh
-source package/package-update.sh
-source package/package.sh
-source utils/clean.sh
-source utils/env.sh
-source utils/styling.sh
+ABS_PATH=$(dirname "$(readlink -f "$0")")
+
+source "$ABS_PATH/package/package-install.sh"
+source "$ABS_PATH/package/package-update.sh"
+source "$ABS_PATH/package/package.sh"
+source "$ABS_PATH/utils/clean.sh"
+source "$ABS_PATH/utils/env.sh"
+source "$ABS_PATH/utils/styling.sh"
 
 echo -e \
 "${BOLD}${MAGENTA}${HEADER}${RESET}\n" \
