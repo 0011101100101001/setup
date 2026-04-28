@@ -5,10 +5,9 @@ set -euo pipefail
 source package/package-install.sh
 source package/package-update.sh
 source package/package.sh
-source binary.sh
-source clean.sh
-source env.sh
-source styling.sh
+source utils/clean.sh
+source utils/env.sh
+source utils/styling.sh
 
 echo -e \
 "${BOLD}${MAGENTA}${HEADER}${RESET}\n" \
