@@ -17,10 +17,14 @@ REPO_DIR="$REPO_PATH/setup"
 REPO_CMD_PATH="$REPO_DIR/linux/src/setup.sh"
 
 clone_repository() {
-    echo -e "${BOLD}${BLUE}Setup: ${WHITE}cloning repo...${RESET}"
     mkdir -p "$REPO_DIR"
-    cd "$REPO_PATH"
-    git clone https://github.com/0011101100101001/setup.git
+    echo -e "${BOLD}${BLUE}Setup: ${WHITE}cloning repo...${RESET}"
+    git clone https://github.com/0011101100101001/setup.git "${REPO_DIR}"
+    rm -rf \
+    "$REPO_DIR/windows" \
+    "$REPO_DIR/README.md" \
+    "$REPO_DIR/.gitignore" \
+    "$REPO_DIR/.git"
 }
 
 check_repository() {
@@ -28,7 +32,7 @@ check_repository() {
         clone_repository
     else
         echo -e \
-        "${BOLD}${YELLOW}Setup:" \
+        "${BOLD}${YELLOW}Warning:" \
         "${WHITE}repository already exist in" \
         "${BOLD}${BLUE}${REPO_PATH}${RESET}\n" \
         "Overwrite it or abort? ${BOLD}${BLUE}[y/n]${RESET}"
@@ -44,11 +48,17 @@ check_repository() {
 }
 
 install_executable() {
-    echo -e \
-    "${BOLD}${BLUE}Setup: ${WHITE}install executable${RESET}"
     mkdir -p "$CMD_DIR"
+    echo -e \
+    "${BOLD}${BLUE}Setup: ${WHITE}install executable...${RESET}"
     ln -sf "$REPO_CMD_PATH" "$CMD_PATH"
     chmod u+x "$REPO_CMD_PATH"
+
+    if [[ ":$PATH:" != *":$CMD_DIR:"* ]]; then
+        echo -e \
+        "${BOLD}${YELLOW}Warning: ${BLUE}${CMD_DIR}" \
+        "${WHITE}is not in your PATH.${RESET}"
+    fi
 }
 
 echo -e "${BOLD}${MAGENTA}SETUP - INSTALLATION${RESET}"
@@ -58,7 +68,7 @@ if [[ ! -f "$CMD_PATH" ]]; then
     install_executable
 else
     echo -e \
-        "${BOLD}${YELLOW}Setup:" \
+        "${BOLD}${YELLOW}Warning:" \
         "${WHITE}executable already exist\n${RESET}" \
         "Overwrite it or abort? ${BOLD}${BLUE}[y/n]${RESET}"
     while true; do
@@ -72,6 +82,6 @@ else
     install_executable
 fi
 
-echo -e "\n${BOLD}${MAGENTA}DONE${RESET}"
+echo -e "${BOLD}${MAGENTA}DONE${RESET}"
 
 exit 0
