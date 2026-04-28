@@ -62,7 +62,6 @@ install_executable() {
 }
 
 echo -e "${BOLD}${MAGENTA}SETUP - INSTALLATION${RESET}"
-
 if [[ ! -f "$CMD_PATH" ]]; then
     check_repository
     install_executable
@@ -81,7 +80,6 @@ else
     done
     install_executable
 fi
-
 echo -e "${BOLD}${MAGENTA}DONE${RESET}"
 
 exit 0

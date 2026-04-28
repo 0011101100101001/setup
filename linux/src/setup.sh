@@ -10,12 +10,13 @@ source "$ABS_PATH/package/package.sh"
 source "$ABS_PATH/utils/clean.sh"
 source "$ABS_PATH/utils/env.sh"
 source "$ABS_PATH/utils/styling.sh"
+source "$ABS_PATH/utils/sudo.sh"
 
 echo -e \
 "${BOLD}${MAGENTA}${HEADER}${RESET}\n" \
-"${BOLD}${BLUE}  Architecture: ${WHITE}${ARCHITECTURE}${RESET}\n" \
-"${BOLD}${BLUE}  Distribution: ${WHITE}${DISTRIBUTION}${RESET}\n" \
-"${BOLD}${BLUE}  Package manager: ${WHITE}${PACKAGE_MANAGER}${RESET}\n"
+"${BOLD}${BLUE}  Architecture: ${WHITE}${ARCH}${RESET}\n" \
+"${BOLD}${BLUE}  Distribution: ${WHITE}${DISTRO}${RESET}\n" \
+"${BOLD}${BLUE}  Package manager: ${WHITE}${PKG_MANAGER}${RESET}\n"
 
 echo -e \
 "${BOLD}${WHITE}" \
@@ -27,11 +28,13 @@ echo -e \
 while true; do
     read -r answer
     case "$answer" in
-        "i") install_setup; break ;;
-        "u") update_setup; break ;;
-        "q") abort_setup ;;
-        *) echo -e "${BOLD}${RED}Error:${RESET}" \
-                "invalid option ${BOLD}${RED}$answer${RESET}."
+        "i") setup_install; break ;;
+        "u") setup_update; break ;;
+        "q") setup_abort ;;
+        *) echo -e \
+            "${BOLD}${RED}Error:${RESET}" \
+            "invalid option ${BOLD}${RED}${answer}${RESET}."
+        ;;
     esac
 done
 

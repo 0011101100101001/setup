@@ -1,7 +1,5 @@
 # Text styling
 
-set -euo pipefail
-
 RESET="\e[0m"
 BOLD="\e[1m"
 UNBOLD="\e[22m"

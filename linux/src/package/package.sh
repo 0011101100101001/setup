@@ -1,19 +1,9 @@
 # Packages to download and install
 
-set -euo pipefail
-
-EDITORS=(
-    "neovim"
-    "vim"
-    "vscode"
-    "zed"
-)
-
-LANGUAGES=(
-    "golang"
-    "perl"
-    "python"
-    "rust"
+BROWSER=(
+    "brave"
+    "firefox"
+    "tor"
 )
 
 COMPILATOR=(
@@ -23,14 +13,50 @@ COMPILATOR=(
     "g++"
 )
 
-DEBUG_TOOLS=(
+DEBUGGER=(
     "gdb"
     "llvm"
 )
 
+EDITOR=(
+    "neovim"
+    "vim"
+    "vscode"
+    "zed"
+)
+
+LANGUAGE=(
+    "golang"
+    "perl"
+    "python"
+    "rust"
+)
+
+NOTE=(
+    "notion"
+    "obsidian"
+)
+
+REVERSE=(
+    "binaryninja"
+    "ghidra"
+    "ida"
+)
+
+VIRTUALIZATION=(
+    "virtualbox"
+    "virt-manager"
+)
+
+VPN=(
+    "openvpn"
+    "protonvpn"
+    "wireguard"
+)
+
 PACKAGE=(
-    "${EDITORS[@]}"
-    "${LANGUAGES[@]}"
+    "${EDITOR[@]}"
+    "${LANGUAGE[@]}"
     "${COMPILATOR[@]}"
-    "${DEBUG_TOOLS[@]}"
+    "${DEBUG_TOOL[@]}"
 )

@@ -1,40 +1,39 @@
 # Initialize variables for setup process
 
-set -euo pipefail
-
 source /etc/os-release
 
 SCRIPT_DIR=$(cd ..; pwd)
 LOG_DIR="$SCRIPT_DIR/log"
-ARCHITECTURE="$(uname -m)"
-DISTRIBUTION=""
-PACKAGE_MANAGER=""
-CHECK_OPTION=""
-INSTALL_OPTION=""
-UPDATE_OPTION=""
-CLEAN_OPTION=""
+ARCH="$(uname -m)"
+DISTRO="${ID^}"
+PKG_MANAGER=""
+PKG_REPO_UPDATE=""
+PKG_CHECK=""
+PKG_INSTALL=""
+PKG_UPDATE=""
+PKG_REMOVE=""
 
 if [[ "$NAME" =~ [Ff]edora ]]; then
-    DISTRIBUTION="Fedora"
-    PACKAGE_MANAGER="dnf"
-    CHECK_OPTION=(list --installed)
-    INSTALL_OPTION=(install -y)
-    UPDATE_OPTION=(upgrade -y)
-    CLEAN_OPTION="remove"
+    PKG_MANAGER="dnf"
+    PKG_REPO_UPDATE="makecache"
+    PKG_CHECK=(list --installed)
+    PKG_INSTALL=(install -y)
+    PKG_UPDATE=(upgrade -y)
+    PKG_REMOVE=(remove -y)
 
-elif [[ "$NAME" =~ [Dd]ebian ]]; then
-    DISTRIBUTION="Debian"
-    PACKAGE_MANAGER="apt"
-    CHECK_OPTION=(list --installed)
-    INSTALL_OPTION=(install -y)
-    UPDATE_OPTION=(install --only-upgrade -y)
-    CLEAN_OPTION="uninstall"
+elif [[ "$NAME" =~ [Dd]ebian|[Kk]ali|[Pp]arrot ]]; then
+    PKG_MANAGER="apt"
+    PKG_REPO_UPDATE="update"
+    PKG_CHECK=(list --installed)
+    PKG_INSTALL=(install -y)
+    PKG_UPDATE=(install --only-upgrade -y)
+    PKG_REMOVE=(remove -y)
 
 elif [[ "$NAME" =~ [Aa]rch ]]; then
-    DISTRIBUTION="Arch"
-    PACKAGE_MANAGER="pacman"
-    CHECK_OPTION="-Q"
-    INSTALL_OPTION=(-S --noconfirm)
-    UPDATE_OPTION=(-Syu --noconfirm)
-    CLEAN_OPTION="-R"
+    PKG_MANAGER="pacman"
+    PKG_REPO_UPDATE=(-Sy --noconfirm)
+    PKG_CHECK=(-Q)
+    PKG_INSTALL=(-S --noconfirm)
+    PKG_UPDATE=(-Syu --noconfirm)
+    PKG_REMOVE=(-Rs --noconfirm)
 fi

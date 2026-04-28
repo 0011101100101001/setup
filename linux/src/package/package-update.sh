@@ -1,41 +1,31 @@
 # Update all already installed packages
 
-set -euo pipefail
-
 is_installed() {
-   if $PACKAGE_MANAGER $CHECK_OPTION $1 &> /dev/null; then
+   if $PKG_MANAGER $PKG_OPTION $1 &> /dev/null; then
         return 0
    fi
    return 1
 }
 
 update_editor() {
-    for editor in "${EDITORS[@]}"; do
-        echo -e "${BOLD}${BLUE}Update: ${WHITE}${editor}${RESET}"
-        if is_installed $editor; then
-            sudo $PACKAGE_MANAGER "${UPDATE_OPTION[@]}" $editor
-
+    for package in "${EDITOR[@]}"; do
+        echo -e "${BOLD}${BLUE}Update: ${WHITE}${package}${RESET}"
+        if is_installed $package; then
+            sudo $PKG_MANAGER "${UPDATE_OPTION[@]}" $package
+            (($1++))
         fi
     done
 }
 
-get_sudo_privilege() {
-    echo -e \
-    "${BOLD}${YELLOW}Sudo:" \
-    "${WHITE}higher privilege are required to run the script${RESET}"
-    if ! sudo -v; then
-        abort_setup
-    fi
-    echo
-}
-
-update_setup() {
-    local HEADER=\
+setup_update() {
+    local header=\
 "╦ ╦╔═╗╔╦╗╔═╗╔╦╗╔═╗
 ║ ║╠═╝ ║║╠═╣ ║ ║╣
 ╚═╝╩  ═╩╝╩ ╩ ╩ ╚═╝"
+    local count=0
 
-    echo -e "\n${BOLD}${MAGENTA}${HEADER}${RESET}"
+    echo -e "${BOLD}${MAGENTA}${header}${RESET}"
     get_sudo_privilege
-    update_editor
+    update_editor $count
+    echo $count
 }
