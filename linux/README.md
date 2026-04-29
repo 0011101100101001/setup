@@ -10,4 +10,13 @@
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/0011101100101001/setup/main/linux/install.sh)"
 ```
 
+### **Usage**
+```sh
+setup [-i|u]
+```
+
+### **Description**
+> Work in progress...
+
+### **Demo**
 > Work in progress...
