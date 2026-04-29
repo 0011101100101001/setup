@@ -1,62 +1,65 @@
-# Packages to download and install
+# Download and install all packages
 
-BROWSER=(
-    "brave"
-    "firefox"
-    "tor"
-)
+manage_browser() {
+    return
+}
 
-COMPILATOR=(
-    "clang"
-    "clang++"
-    "gcc"
-    "g++"
-)
+manage_compilator() {
+    return
+}
 
-DEBUGGER=(
-    "gdb"
-    "llvm"
-)
+manage_debugger() {
+    return
+}
 
-EDITOR=(
-    "neovim"
-    "vim"
-    "vscode"
-    "zed"
-)
+manage_editor() {
+    local -n __count=$1
 
-LANGUAGE=(
-    "golang"
-    "perl"
-    "python"
-    "rust"
-)
+    ((++__count))
+}
 
-NOTE=(
-    "notion"
-    "obsidian"
-)
+manage_specific_package() {
+    echo -e \
+"${BOLD}${WHITE}Choose between: ${BLUE}[cat1, cat2, catn.../q]
+    ${BOLD}${BLUE}types: ${RESET}browser, compilator, debugger, editor,
+              language, note, reverse, virtualization, vpn
+    ${BOLD}${BLUE}q: ${RESET}quit"
+    while true; do
+        read -r answer
+        case "$answer" in
+            "browser") manage_browser;;
+            "compilator") manage_compilator;;
+            "editor") manage_editor;;
+            "debugger") manage_debugger;;
+        esac
+    done
+}
 
-REVERSE=(
-    "binaryninja"
-    "ghidra"
-    "ida"
-)
+manage_package() {
+    local -n _count=$3
 
-VIRTUALIZATION=(
-    "virtualbox"
-    "virt-manager"
-)
+    manage_browser _count
+    manage_editor _count
+}
 
-VPN=(
-    "openvpn"
-    "protonvpn"
-    "wireguard"
-)
+setup_package() {
+    local count=0
+    local mod=$2
 
-PACKAGE=(
-    "${EDITOR[@]}"
-    "${LANGUAGE[@]}"
-    "${COMPILATOR[@]}"
-    "${DEBUG_TOOL[@]}"
-)
+    echo -e "${BOLD}${MAGENTA}$1${RESET}"
+    echo -e \
+"${BOLD}${WHITE}Which package to $mod? ${BLUE}[a/s/q]
+    ${BOLD}${BLUE}a: ${RESET}all
+    ${BOLD}${BLUE}s: ${RESET}specific
+    ${BOLD}${BLUE}q: ${RESET}quit"
+    while true; do
+        read -r answer
+        case "$answer" in
+            "a") manage_package $mod all count; break;;
+            "s") manage_package $mod specific count; break;;
+            "q") setup_abort;;
+        esac
+    done
+    echo -e \
+    "${BOLD}${MAGENTA}Package: ${BLUE}${count}${WHITE} $mod"
+}

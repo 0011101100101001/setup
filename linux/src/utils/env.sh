@@ -13,7 +13,7 @@ PKG_INSTALL=""
 PKG_UPDATE=""
 PKG_REMOVE=""
 
-if [[ "$NAME" =~ [Ff]edora ]]; then
+if [[ "$DISTRO" =~ Fedora ]]; then
     PKG_MANAGER="dnf"
     PKG_REPO_UPDATE="makecache"
     PKG_CHECK=(list --installed)
@@ -21,7 +21,7 @@ if [[ "$NAME" =~ [Ff]edora ]]; then
     PKG_UPDATE=(upgrade -y)
     PKG_REMOVE=(remove -y)
 
-elif [[ "$NAME" =~ [Dd]ebian|[Kk]ali|[Pp]arrot ]]; then
+elif [[ "$DISTRO" =~ Debian|Kali|Parrot ]]; then
     PKG_MANAGER="apt"
     PKG_REPO_UPDATE="update"
     PKG_CHECK=(list --installed)
@@ -29,7 +29,7 @@ elif [[ "$NAME" =~ [Dd]ebian|[Kk]ali|[Pp]arrot ]]; then
     PKG_UPDATE=(install --only-upgrade -y)
     PKG_REMOVE=(remove -y)
 
-elif [[ "$NAME" =~ [Aa]rch ]]; then
+elif [[ "$DISTRO" =~ Arch ]]; then
     PKG_MANAGER="pacman"
     PKG_REPO_UPDATE=(-Sy --noconfirm)
     PKG_CHECK=(-Q)

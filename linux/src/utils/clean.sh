@@ -2,7 +2,7 @@
 
 signal_handler() {
     echo -e \
-    "${BOLD}${YELLOW}Signal(${UNBOLD}$1${BOLD}):" \
+    "\n${BOLD}${YELLOW}Signal(${UNBOLD}$1${BOLD}):" \
     "${WHITE}aborting setup...${RESET}"
     exit 1
 }
@@ -11,7 +11,7 @@ trap 'signal_handler SIGINT' SIGINT
 trap 'signal_handler SIGTERM' SIGTERM
 
 setup_abort() {
-    echo -e "\n${BOLD}${MAGENTA}Aborting...${RESET}"
+    echo -e "${BOLD}${MAGENTA}Aborting...${RESET}"
     exit 0
 }
 
