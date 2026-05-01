@@ -9,12 +9,3 @@ signal_handler() {
 
 trap 'signal_handler SIGINT' SIGINT
 trap 'signal_handler SIGTERM' SIGTERM
-
-setup_abort() {
-    echo -e "${BOLD}${MAGENTA}Aborting...${RESET}"
-    exit 0
-}
-
-quit_setup() {
-    exit 0
-}

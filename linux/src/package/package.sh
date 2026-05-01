@@ -1,24 +1,21 @@
 # Download and install all packages
 
-manage_browser() {
-    return
+setup_compilator() {
+    local -n _count=$2
+
+    ((++_count))
 }
 
-manage_compilator() {
-    return
+setup_debugger() {
+    local -n _count=$2
+
+    ((++_count))
 }
 
-manage_debugger() {
-    return
-}
+setup_specific_package() {
+    local cmd=$1
+    local count=0
 
-manage_editor() {
-    local -n __count=$1
-
-    ((++__count))
-}
-
-manage_specific_package() {
     echo -e \
 "${BOLD}${WHITE}Choose between: ${BLUE}[cat1, cat2, catn.../q]
     ${BOLD}${BLUE}types: ${RESET}browser, compilator, debugger, editor,
@@ -27,39 +24,81 @@ manage_specific_package() {
     while true; do
         read -r answer
         case "$answer" in
-            "browser") manage_browser;;
-            "compilator") manage_compilator;;
-            "editor") manage_editor;;
-            "debugger") manage_debugger;;
+            "browser") setup_browser cmd _count;;
+            "compilator") setup_compilator cmd _count;;
+            "editor") setup_editor cmd _count;;
+            "debugger") setup_debugger cmd _count;;
+            "q") abort_setup;;
         esac
     done
 }
 
-manage_package() {
-    local -n _count=$3
+start_setup() {
+    local cmd
+    local mode=$1
+    local which=$2
+    local end_time
+    local start_time
+    local count=0
 
-    manage_browser _count
-    manage_editor _count
+    if [[ $mode == "install" ]]; then
+        cmd="$PKG_INSTALL"
+    else
+        cmd="$PKG_UPDATE"
+    fi
+
+    if [[ $which == "specific" ]]; then
+        setup_specific_package cmd count
+    else
+        # start_time=$SECONDS
+        start_time=$EPOCHREALTIME
+        for function in "${PACKAGE_FUNCTION[@]}"; do
+            $function cmd count
+        done
+        sleep 2
+        # end_time=$SECONDS
+        end_time=$EPOCHREALTIME
+    fi
+    elapsed=$(awk "BEGIN {print $end_time - $start_time}")
+    echo -e \
+    "${BOLD}${MAGENTA}Package:" \
+    "${BLUE}${count}${WHITE} $mode in ${BLUE}${elapsed} seconds${RESET}"
+}
+
+check_package() {
+    for package in "${PACKAGE[@]}"; do
+        if [[ "$1" == "$package" ]]; then
+            setup_specific_package $package
+        else
+            echo -e \
+            "${BOLD}${RED}Error:"
+            "${WHITE}no packages found with this input${RESET}"
+        fi
+    done
 }
 
 setup_package() {
-    local count=0
-    local mod=$2
+    local header=""
+    local mode=$1
 
-    echo -e "${BOLD}${MAGENTA}$1${RESET}"
+    if [[ $mode == "install" ]]; then
+        header=$INSTALL_HEADER
+    else
+        header=$UPDATE_HEADER
+    fi
+    echo -e "${BOLD}${MAGENTA}${header}${RESET}"
     echo -e \
-"${BOLD}${WHITE}Which package to $mod? ${BLUE}[a/s/q]
+"${BOLD}${WHITE}Which package to $mode? ${BLUE}[a/s/q]
     ${BOLD}${BLUE}a: ${RESET}all
     ${BOLD}${BLUE}s: ${RESET}specific
     ${BOLD}${BLUE}q: ${RESET}quit"
     while true; do
         read -r answer
         case "$answer" in
-            "a") manage_package $mod all count; break;;
-            "s") manage_package $mod specific count; break;;
-            "q") setup_abort;;
+            a) start_setup $mode all; break;;
+            s) start_setup $mode specific; break;;
+            q) abort_setup;;
+            *) check_package $mode answer;;
         esac
     done
-    echo -e \
-    "${BOLD}${MAGENTA}Package: ${BLUE}${count}${WHITE} $mod"
 }
