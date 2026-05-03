@@ -5,4 +5,9 @@
 </pre>
 </div>
 
+### **Installation**
+```powershell
+Invoke-RestMethod -Uri 'https://raw.githubusercontent.com/0011101100101001/setup/main/windows/install.ps1' | Invoke-Expression
+```
+
 > Work in progress...
