@@ -1,3 +1,7 @@
+$Admin = @(
+    "RevoUninstaller.RevoUninstaller"
+)
+
 $Editor = @(
     "Microsoft.VisualStudioCode",
     "Neovim.Neovim",
@@ -14,6 +18,11 @@ $Language = @(
 $NoteTaking = @(
     "Obsidian.Obsidian"
     "Notion.Notion"
+)
+
+$PackageManager = @(
+    "Chocolatey"
+    "Scoop"
 )
 
 $Terminal = @(
@@ -33,20 +42,3 @@ $Packages = @(
     $Terminal,
     $NoteTaking
 )
-
-function Install-Package() {
-    foreach ($package in $Packages) {
-
-        if (winget list --name $Package) {
-            Write-Host "$SetupError"
-
-        } else {
-            Write-Host `
-            "$SetupPrint$Bold$White$Package has been installed.$Reset"
-        }
-
-        } else {
-
-        }
-    }
-}

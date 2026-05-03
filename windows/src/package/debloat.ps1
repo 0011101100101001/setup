@@ -58,6 +58,10 @@ $Bloatware = @(
 
 function Debloat-Windows() {
     foreach ($item in $Bloatware) {
-        Write-Host "$SetupPrint$Bold$White$Item$Reset"
+        Write-Host -NoNewline `
+        "$Bold${Blue}Debloat: ${White}removing ${Blue}item"
+        winget uninstall `
+        --id $item --exact --silent --accept-source-agreements | Out-Null
+        Write-Host "$Bold$Green✔$Reset"
     }
 }
