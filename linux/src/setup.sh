@@ -9,6 +9,7 @@ source "$ABS_PATH/package/package-editor.sh"
 source "$ABS_PATH/package/package-language.sh"
 source "$ABS_PATH/package/package-list.sh"
 source "$ABS_PATH/package/package.sh"
+source "$ABS_PATH/utils/dotfiles.sh"
 source "$ABS_PATH/utils/env.sh"
 source "$ABS_PATH/utils/exit.sh"
 source "$ABS_PATH/utils/help.sh"
@@ -24,10 +25,10 @@ echo -e \
 
 if [[ "$#" -eq 0 ]]; then
     echo -e \
-    "${BOLD}${WHITE}Which action to perform? ${BLUE}[i/u/q]
-        ${BOLD}${BLUE}i: ${RESET}install
-        ${BOLD}${BLUE}u: ${RESET}update
-        ${BOLD}${BLUE}q: ${RESET}quit"
+"${BOLD}${WHITE}Which action to perform? ${BLUE}[i/u/q]
+    ${BOLD}${BLUE}i: ${RESET}install
+    ${BOLD}${BLUE}u: ${RESET}update
+    ${BOLD}${BLUE}q: ${RESET}quit"
     while true; do
         read -r answer
         case "$answer" in

@@ -60,3 +60,15 @@ PACKAGE=(
     "${COMPILATOR[@]}"
     "${DEBUG_TOOL[@]}"
 )
+
+PACKAGE_CATEGORY=(
+    "browser"
+    # "compilator"
+    # "debugger"
+    "editor"
+    # "language"
+    # "note"
+    # "reverse"
+    # "virtualization"
+    # "vpn"
+)

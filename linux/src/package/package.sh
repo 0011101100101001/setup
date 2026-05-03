@@ -1,17 +1,5 @@
 # Download and install all packages
 
-setup_compilator() {
-    local -n _count=$2
-
-    ((++_count))
-}
-
-setup_debugger() {
-    local -n _count=$2
-
-    ((++_count))
-}
-
 setup_specific_package() {
     local cmd=$1
     local count=0
@@ -25,9 +13,14 @@ setup_specific_package() {
         read -r answer
         case "$answer" in
             "browser") setup_browser cmd _count;;
-            "compilator") setup_compilator cmd _count;;
+            # "compilator") setup_compilator cmd _count;;
+            # "debugger") setup_debugger cmd _count;;
             "editor") setup_editor cmd _count;;
-            "debugger") setup_debugger cmd _count;;
+            # "language") setup_language cmd _count;;
+            # "note") setup_note cmd _count;;
+            # "reverse") setup_reverse cmd _count;;
+            # "virtualization") setup_virtualization cmd _count;;
+            # "vpn") setup_vpn cmd _count;;
             "q") abort_setup;;
         esac
     done
@@ -52,10 +45,9 @@ start_setup() {
     else
         # start_time=$SECONDS
         start_time=$EPOCHREALTIME
-        for function in "${PACKAGE_FUNCTION[@]}"; do
-            $function cmd count
+        for category in "${PACKAGE_CATEGORY[@]}"; do
+            "setup_$category" cmd count
         done
-        sleep 2
         # end_time=$SECONDS
         end_time=$EPOCHREALTIME
     fi

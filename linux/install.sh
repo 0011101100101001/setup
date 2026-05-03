@@ -12,14 +12,18 @@ WHITE="\e[37m"
 CMD="setup"
 CMD_DIR="$HOME/.local/bin"
 CMD_PATH="$CMD_DIR/$CMD"
+
 REPO_PATH="$HOME/.local/share"
 REPO_DIR="$REPO_PATH/setup"
 REPO_CMD_PATH="$REPO_DIR/linux/src/setup.sh"
 
 clone_repository() {
+    if ! command -v git &> /dev/null; then
+        PKG_INSTALL git
+    fi
     mkdir -p "$REPO_DIR"
     echo -e "${BOLD}${BLUE}Setup: ${WHITE}cloning repo...${RESET}"
-    git clone https://github.com/0011101100101001/setup.git "${REPO_DIR}"
+    git clone https://github.com/0011101100101001/setup.git "$REPO_DIR"
     rm -rf \
     "$REPO_DIR/windows" \
     "$REPO_DIR/README.md" \
@@ -39,9 +43,8 @@ check_repository() {
         while true; do
             read -r answer
             case "$answer" in
-                "y") rm -rf "$REPO_DIR"; clone_repository; break;;
-
-                "n") echo -e "${BOLD}${MAGENTA}Aborting...${RESET}"; exit 0;;
+                y|Y) rm -rf "$REPO_DIR"; clone_repository; break;;
+                n|N) echo -e "${BOLD}${MAGENTA}Aborting...${RESET}"; exit 0;;
             esac
         done
     fi
@@ -58,6 +61,17 @@ install_executable() {
         echo -e \
         "${BOLD}${YELLOW}Warning: ${BLUE}${CMD_DIR}" \
         "${WHITE}is not in your PATH.${RESET}"
+
+        echo -e \
+        "The shell used is ${BOLD}${BLUE}${SHELL##*/}${RESET}." \
+        "Should we add ~/.local/bin PATH to .${SHELL##*/}rc?"
+        while true; do
+            read -r answer
+            case "$answer" in
+                y|Y) echo 'export PATH="${PATH}:~/.local/bin"'; break;;
+                n|N) break;;
+            esac
+        done
     fi
 }
 
@@ -73,9 +87,8 @@ else
     while true; do
         read -r answer
         case "$answer" in
-            "y") rm -rf "$CMD_DIR"; check_repository; break;;
-
-            "n") echo -e "${BOLD}${MAGENTA}Aborting...${RESET}"; exit 0;;
+            y|Y) rm -rf "$CMD_DIR"; check_repository; break;;
+            n|N) echo -e "${BOLD}${MAGENTA}Aborting...${RESET}"; exit 0;;
         esac
     done
     install_executable

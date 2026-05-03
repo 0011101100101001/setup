@@ -1,27 +1,27 @@
 # Editors to setup
 
 setup_vscode() {
-    return
+    if [[ $DOTFILES_ALREADY_MANAGED == "false" ]]; then manage_dotfiles; fi
 }
 
 setup_zed() {
-    return
+    if [[ $DOTFILES_ALREADY_MANAGED == "false" ]]; then manage_dotfiles; fi
 }
 
 setup_vim() {
-    return
+    if [[ $DOTFILES_ALREADY_MANAGED == "false" ]]; then manage_dotfiles; fi
 }
 
 setup_neovim() {
-    return
+    if [[ $DOTFILES_ALREADY_MANAGED == "false" ]]; then manage_dotfiles; fi
 }
 
 setup_editor() {
     local cmd=$1
     local -n __count=$2
 
-    setup_neovim; ((++__count))
-    setup_vim; ((++__count))
-    setup_vscode; ((++__count))
-    setup_zed; ((++__count))
+    setup_neovim cmd; ((++__count))
+    setup_vim cmd; ((++__count))
+    setup_vscode cmd; ((++__count))
+    setup_zed cmd; ((++__count))
 }
